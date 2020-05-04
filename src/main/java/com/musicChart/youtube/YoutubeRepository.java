@@ -16,7 +16,6 @@ import java.security.GeneralSecurityException;
 public class YoutubeRepository {
     @Autowired
     private YoutubeConfiguration youtubeConfiguration;
-//    private YoutubeConfiguration youtubeConfiguration = new YoutubeConfiguration();
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
     public static YouTube getService() throws GeneralSecurityException, IOException {
@@ -28,7 +27,6 @@ public class YoutubeRepository {
 
     public VideoListResponse getVideoListResponse() throws IOException, GeneralSecurityException {
         YouTube.Videos.List youtubeRequest = getService().videos().list("snippet,localizations");
-        System.out.println("key " + youtubeConfiguration.getDeveloperKey());
         return youtubeRequest.setKey(youtubeConfiguration.getDeveloperKey())
                 .setChart("mostPopular")
                 .setRegionCode("TH")
