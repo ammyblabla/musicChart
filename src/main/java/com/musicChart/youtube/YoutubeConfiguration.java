@@ -16,5 +16,4 @@ import org.springframework.context.annotation.Configuration;
 public class YoutubeConfiguration {
     private String developerKey;
     private String applicationName;
-    private String value;
 }

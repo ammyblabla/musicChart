@@ -23,7 +23,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        exclude group: 'junit', module: 'junit'
     }
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
@@ -34,8 +34,20 @@ dependencies {
     implementation 'com.google.apis:google-api-services-youtube:v3-rev20200320-1.30.9'
 
     // test
-    testCompile 'org.hamcrest:hamcrest:2.2'
-    testImplementation 'io.rest-assured:rest-assured:4.3.0'
+    //Libraries for unit testing
+    testImplementation 'com.sun.xml.bind:jaxb-osgi:2.3.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
+
+
+    //Library for testing API outputs
+    testImplementation 'io.rest-assured:rest-assured:3.3.0'
+
 
 
 }
