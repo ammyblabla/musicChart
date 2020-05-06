@@ -13,7 +13,6 @@ import java.util.List;
 public class YoutubeService {
     // TODO: save each video in mongo
     // TODO: add field in dto
-    // TODO: use UUID as id, also keep video id
     @Autowired
     YoutubeRepository youtubeRepository;
 

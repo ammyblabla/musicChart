@@ -29,7 +29,7 @@ public class YoutubeTransformer {
                 .rank(rank)
                 .name(video.getSnippet().getTitle())
                 .date(LocalDate.now())
-                .id("id")
+                .id(video.getId())
                 .build();
     }
 
