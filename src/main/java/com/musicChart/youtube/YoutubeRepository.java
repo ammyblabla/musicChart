@@ -27,7 +27,7 @@ public class YoutubeRepository {
     }
 
     public VideoListResponse getVideoListResponse() throws IOException, GeneralSecurityException {
-        YouTube.Videos.List youtubeRequest = getService().videos().list("snippet");
+        YouTube.Videos.List youtubeRequest = getService().videos().list("snippet,statistics");
         return youtubeRequest.setKey(youtubeConfiguration.getDeveloperKey())
                 .setChart("mostPopular")
                 .setRegionCode("TH")

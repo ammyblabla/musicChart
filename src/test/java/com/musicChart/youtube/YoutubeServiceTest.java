@@ -1,9 +1,6 @@
 package com.musicChart.youtube;
 
-import com.google.api.services.youtube.model.PageInfo;
-import com.google.api.services.youtube.model.Video;
-import com.google.api.services.youtube.model.VideoListResponse;
-import com.google.api.services.youtube.model.VideoSnippet;
+import com.google.api.services.youtube.model.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
@@ -46,6 +44,13 @@ class YoutubeServiceTest {
                 .setId("ladClnnJhqg")
                 .setSnippet(new VideoSnippet()
                         .setTitle("GOT7 \\\"NOT BY THE MOON\\\" M/V")
+                )
+                .setStatistics(new VideoStatistics()
+                        .setViewCount(new BigInteger("1640541"))
+                        .setLikeCount(new BigInteger("95981"))
+                        .setDislikeCount(new BigInteger("760"))
+                        .setFavoriteCount(new BigInteger("0"))
+                        .setCommentCount(new BigInteger("2236"))
                 );
     }
 

@@ -2,14 +2,12 @@ package com.musicChart.youtube;
 
 import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
-import com.google.api.services.youtube.model.VideoLocalization;
+import com.google.api.services.youtube.model.VideoStatistics;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class YoutubeTransformer {
@@ -30,7 +28,17 @@ public class YoutubeTransformer {
                 .name(video.getSnippet().getTitle())
                 .date(LocalDate.now())
                 .id(video.getId())
+                .statistics(transformStatistics(video.getStatistics()))
                 .build();
     }
 
+    public YoutubeDto.Statistics transformStatistics(VideoStatistics videoStatistics) {
+        return YoutubeDto.Statistics.builder()
+                .viewCount(videoStatistics.getViewCount())
+                .likeCount(videoStatistics.getLikeCount())
+                .dislikeCount(videoStatistics.getDislikeCount())
+                .favouriteCount(videoStatistics.getFavoriteCount())
+                .commentCount(videoStatistics.getCommentCount())
+                .build();
+    }
 }
