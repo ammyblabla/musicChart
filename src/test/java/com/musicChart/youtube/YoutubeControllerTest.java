@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.io.File;
 import java.math.BigInteger;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +35,7 @@ class YoutubeControllerTest {
     @Test
     void should_return_Youtube_Dto_when_call_controller() throws Exception {
         List<YoutubeDto> youtubeDto = getYoutubeDto();
-        given(youtubeService.handleRequest()).willReturn(youtubeDto);
+        given(youtubeService.handleRequest(null)).willReturn(youtubeDto);
         String expectedResult = readFileAsString("response.json");
 
         this.mockMvc
@@ -44,6 +43,20 @@ class YoutubeControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(expectedResult));
+    }
+
+    @Test
+    void should_return_Youtube_Dto_when_call_controller_given_pageToken() throws Exception {
+        List<YoutubeDto> youtubeDto = getYoutubeDto();
+        given(youtubeService.handleRequest("CAUQAA")).willReturn(youtubeDto);
+        String expectedResult = readFileAsString("response.json");
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/youtubeRank/pageToken/CAUQAA")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().json(expectedResult));
+
     }
 
     private List<YoutubeDto> getYoutubeDto() {

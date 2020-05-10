@@ -27,13 +27,25 @@ class YoutubeServiceTest {
     YoutubeRepository youtubeRepository;
 
     @Test
-    void should_invoke_and_youtubeTransformer_when_handle_request_given_receive_data() throws IOException, GeneralSecurityException {
+    void should_invoke_youtubeRepository_and_youtubeTransformer_when_handle_request_given_receive_data() throws IOException, GeneralSecurityException {
         VideoListResponse expectedResult = getVideoResponse();
-        given(youtubeRepository.getVideoListResponse()).willReturn(expectedResult);
+        given(youtubeRepository.getVideoListResponse(null)).willReturn(expectedResult);
 
-        youtubeService.handleRequest();
+        youtubeService.handleRequest(null);
 
-        verify(youtubeRepository).getVideoListResponse();
+        verify(youtubeRepository).getVideoListResponse(null);
+        verify(youtubeTransformer).transformVideoList(expectedResult);
+    }
+
+    @Test
+    void should_invoke_youtubeRepository_and_youtubeTransformer_when_handle_request_given_pageToken() throws IOException, GeneralSecurityException {
+        VideoListResponse expectedResult = getVideoResponse();
+        String pageToken = "CAUQAA";
+        given(youtubeRepository.getVideoListResponse(pageToken)).willReturn(expectedResult);
+
+        youtubeService.handleRequest(pageToken);
+
+        verify(youtubeRepository).getVideoListResponse(pageToken);
         verify(youtubeTransformer).transformVideoList(expectedResult);
     }
 

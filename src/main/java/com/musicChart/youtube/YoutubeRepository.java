@@ -26,12 +26,13 @@ public class YoutubeRepository {
                 .build();
     }
 
-    public VideoListResponse getVideoListResponse() throws IOException, GeneralSecurityException {
+    public VideoListResponse getVideoListResponse(String pageToken) throws IOException, GeneralSecurityException {
         YouTube.Videos.List youtubeRequest = getService().videos().list("snippet,statistics");
         return youtubeRequest.setKey(youtubeConfiguration.getDeveloperKey())
                 .setChart("mostPopular")
                 .setRegionCode("TH")
                 .setVideoCategoryId("10")
+                .setPageToken(pageToken)
                 .execute();
     }
 

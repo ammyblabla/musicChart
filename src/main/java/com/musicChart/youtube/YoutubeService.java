@@ -1,6 +1,5 @@
 package com.musicChart.youtube;
 
-import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.VideoListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +18,8 @@ public class YoutubeService {
     @Autowired
     YoutubeTransformer youtubeTransformer;
 
-    public List<YoutubeDto> handleRequest() throws IOException, GeneralSecurityException {
-        VideoListResponse videoListResponse = youtubeRepository.getVideoListResponse();
+    public List<YoutubeDto> handleRequest(String pageToken) throws IOException, GeneralSecurityException {
+        VideoListResponse videoListResponse = youtubeRepository.getVideoListResponse(pageToken);
         return youtubeTransformer.transformVideoList(videoListResponse);
     }
 }
