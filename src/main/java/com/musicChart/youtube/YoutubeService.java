@@ -13,13 +13,13 @@ public class YoutubeService {
     // TODO: save each video in mongo
     // TODO: add field in dto
     @Autowired
-    YoutubeRepository youtubeRepository;
+    YoutubeApiRepository youtubeApiRepository;
 
     @Autowired
     YoutubeTransformer youtubeTransformer;
 
     public List<YoutubeDto> handleRequest(String pageToken) throws IOException, GeneralSecurityException {
-        VideoListResponse videoListResponse = youtubeRepository.getVideoListResponse(pageToken);
+        VideoListResponse videoListResponse = youtubeApiRepository.getVideoListResponse(pageToken);
         return youtubeTransformer.transformVideoList(videoListResponse);
     }
 }

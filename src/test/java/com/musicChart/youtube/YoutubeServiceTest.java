@@ -24,16 +24,16 @@ class YoutubeServiceTest {
     YoutubeTransformer youtubeTransformer;
 
     @Mock
-    YoutubeRepository youtubeRepository;
+    YoutubeApiRepository youtubeApiRepository;
 
     @Test
     void should_invoke_youtubeRepository_and_youtubeTransformer_when_handle_request_given_receive_data() throws IOException, GeneralSecurityException {
         VideoListResponse expectedResult = getVideoResponse();
-        given(youtubeRepository.getVideoListResponse(null)).willReturn(expectedResult);
+        given(youtubeApiRepository.getVideoListResponse(null)).willReturn(expectedResult);
 
         youtubeService.handleRequest(null);
 
-        verify(youtubeRepository).getVideoListResponse(null);
+        verify(youtubeApiRepository).getVideoListResponse(null);
         verify(youtubeTransformer).transformVideoList(expectedResult);
     }
 
@@ -41,11 +41,11 @@ class YoutubeServiceTest {
     void should_invoke_youtubeRepository_and_youtubeTransformer_when_handle_request_given_pageToken() throws IOException, GeneralSecurityException {
         VideoListResponse expectedResult = getVideoResponse();
         String pageToken = "CAUQAA";
-        given(youtubeRepository.getVideoListResponse(pageToken)).willReturn(expectedResult);
+        given(youtubeApiRepository.getVideoListResponse(pageToken)).willReturn(expectedResult);
 
         youtubeService.handleRequest(pageToken);
 
-        verify(youtubeRepository).getVideoListResponse(pageToken);
+        verify(youtubeApiRepository).getVideoListResponse(pageToken);
         verify(youtubeTransformer).transformVideoList(expectedResult);
     }
 

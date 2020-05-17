@@ -5,19 +5,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.io.File;
 import java.math.BigInteger;
-import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
+import static com.musicChart.FileUtils.readFileAsString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -62,7 +60,7 @@ class YoutubeControllerTest {
     private List<YoutubeDto> getYoutubeDto() {
         return Collections.singletonList(YoutubeDto.builder()
                 .rank(1)
-                .name("ความคิดถึงที่ฉันได้เคยส่งไปในคืนที่ฝนโปรยลงมา - Three Man Down x Tilly Birds")
+                .title("ความคิดถึงที่ฉันได้เคยส่งไปในคืนที่ฝนโปรยลงมา - Three Man Down x Tilly Birds")
                 .date(LocalDate.of(2018,12,18))
                 .id("XGCWJoJb5W0")
                 .statistics(new YoutubeDto.Statistics().builder()
@@ -72,13 +70,8 @@ class YoutubeControllerTest {
                         .favouriteCount(new BigInteger("0"))
                         .commentCount(new BigInteger("2237"))
                         .build())
+                .track("Khwam Kid Thung Tee Chun Dai Khoei Song Pai Nai Kheun Tee Fon Proi Lhong Ma")
+                .artist("Three Man Down; Tilly Birds")
                 .build());
     }
-
-    public static String readFileAsString(String fileName)throws Exception
-    {
-        File resource = new ClassPathResource(fileName).getFile();
-        return new String(Files.readAllBytes(resource.toPath()));
-    }
-
 }

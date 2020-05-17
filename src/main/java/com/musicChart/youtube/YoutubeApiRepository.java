@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 @Repository
-public class YoutubeRepository {
+public class YoutubeApiRepository {
     @Autowired
     private YoutubeConfiguration youtubeConfiguration;
 
@@ -35,6 +35,7 @@ public class YoutubeRepository {
                 .setPageToken(pageToken)
                 .execute();
     }
+
 
 
 }

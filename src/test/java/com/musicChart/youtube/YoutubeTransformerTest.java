@@ -1,26 +1,44 @@
 package com.musicChart.youtube;
 
 import com.google.api.services.youtube.model.*;
+import com.musicChart.youtube.youtubedl.YoutubeDlDto;
+import com.musicChart.youtube.youtubedl.YoutubeDlRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.*;
 
+import static io.restassured.RestAssured.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class YoutubeTransformerTest {
     @InjectMocks
     YoutubeTransformer youtubeTransformer;
 
+    @Mock
+    YoutubeDlRepository youtubeDlRepository;
+
     @Test
-    void should_return_youtube_dto_list_when_transform_given_youtube_response() {
+    void should_return_youtube_dto_list_when_transform_given_youtube_response() throws IOException {
         VideoListResponse videoListResponse = getVideoResponse();
         List<YoutubeDto> expectedResult = Collections.singletonList(getYoutubeDto());
+        given(youtubeDlRepository.getTrackAndArtist("ladClnnJhqg"))
+                .willReturn(YoutubeDlDto.
+                        builder()
+                        .artist("GOT7")
+                        .track("NOT BY THE MOON")
+                        .build()
+                );
 
         List<YoutubeDto> actualResult = youtubeTransformer.transformVideoList(videoListResponse);
         assertEquals(expectedResult,actualResult);
@@ -31,15 +49,13 @@ class YoutubeTransformerTest {
         Video video = getVideo();
         YoutubeDto expectedResult = getYoutubeDto();
 
-        YoutubeDto actualResult = youtubeTransformer.transformVideo(video,1);
+        YoutubeDto actualResult = youtubeTransformer.transformVideo(video,getYoutubeDlDto(),1);
         assertEquals(expectedResult,actualResult);
     }
 
     @Test
     void should_return_statistics_when_transform() {
         VideoStatistics videoStatistics = getVideoStatistics();
-        YoutubeDto.Statistics expectedResult = getStatisticsDto();
-
         assertEquals(getStatisticsDto(), youtubeTransformer.transformStatistics(videoStatistics));
     }
 
@@ -68,9 +84,11 @@ class YoutubeTransformerTest {
         return new YoutubeDto().builder()
                 .rank(1)
                 .date(LocalDate.now())
-                .name("GOT7 \\\"NOT BY THE MOON\\\" M/V")
+                .title("GOT7 \\\"NOT BY THE MOON\\\" M/V")
                 .id("ladClnnJhqg")
                 .statistics(getStatisticsDto())
+                .artist("GOT7")
+                .track("NOT BY THE MOON")
                 .build();
     }
 
@@ -90,6 +108,13 @@ class YoutubeTransformerTest {
                 .dislikeCount(new BigInteger("760"))
                 .favouriteCount(new BigInteger("0"))
                 .commentCount(new BigInteger("2236"))
+                .build();
+    }
+
+    private YoutubeDlDto getYoutubeDlDto() {
+        return YoutubeDlDto.builder()
+                .artist("GOT7")
+                .track("NOT BY THE MOON")
                 .build();
     }
 

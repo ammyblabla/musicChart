@@ -15,9 +15,11 @@ import java.time.LocalDate;
 public class YoutubeDto {
     LocalDate date;
     int rank;
-    String name;
+    String title;
     String id;
     Statistics statistics;
+    String track;
+    String artist;
 
     @Data
     @Builder
